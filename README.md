@@ -20,7 +20,10 @@ Include the header
 #include "bayestest.h"
 ```
 
-Get the winning probability of each variant for binary outcomes
+- [Binary outcomes](#binary-outcomes), like conversion rate
+- [Count data](#count-data), like number of sales per salesperson
+
+## Binary Outcomes
 
 ```c
 int participants[2] = {100, 200};
@@ -32,6 +35,21 @@ int status = bayestest_binary(2, participants, conversions, probabilities);
 Status is `0` on success
 
 Supports up to 4 variants
+
+## Count Data
+
+[unreleased]
+
+```c
+int events[2] = {100, 200};
+int exposure[2] = {50, 95};
+double probabilities[2];
+int status = bayestest_count(2, events, exposure, probabilities);
+```
+
+Status is `0` on success
+
+Supports up to 3 variants
 
 ## History
 
