@@ -292,7 +292,15 @@ static inline int bayestest_count(int variants, const int* events, const int* ex
             return -1;
         }
 
+        if (events[i] > INT_MAX / 4) {
+            return -1;
+        }
+
         if (exposure[i] < 0) {
+            return -1;
+        }
+
+        if (exposure[i] > INT_MAX / 4) {
             return -1;
         }
     }

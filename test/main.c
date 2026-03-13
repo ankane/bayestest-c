@@ -172,9 +172,25 @@ void test_count_negative_events(void) {
     assert(status == -1);
 }
 
+void test_count_high_events(void) {
+    int events[1] = {INT_MAX};
+    int exposures[1] = {1};
+    double probabilities[1];
+    int status = bayestest_count(1, events, exposures, probabilities);
+    assert(status == -1);
+}
+
 void test_count_negative_exposure(void) {
     int events[1] = {1};
     int exposures[1] = {-1};
+    double probabilities[1];
+    int status = bayestest_count(1, events, exposures, probabilities);
+    assert(status == -1);
+}
+
+void test_count_high_exposure(void) {
+    int events[1] = {1};
+    int exposures[1] = {INT_MAX};
     double probabilities[1];
     int status = bayestest_count(1, events, exposures, probabilities);
     assert(status == -1);
@@ -231,7 +247,9 @@ int main(void) {
     test_count_four_variants();
     test_count_exposure_relative();
     test_count_negative_events();
+    test_count_high_events();
     test_count_negative_exposure();
+    test_count_high_exposure();
 
     test_prob_b_beats_a();
     test_prob_c_beats_ab();
