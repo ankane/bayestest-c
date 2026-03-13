@@ -153,6 +153,9 @@ static inline int bayestest_binary(int variants, const int* participants, const 
     }
 
     switch (variants) {
+        case 0: {
+            break;
+        }
         case 1: {
             probabilities[0] = 1;
             break;
@@ -228,7 +231,7 @@ static inline int bayestest_binary(int variants, const int* participants, const 
             break;
         }
         default: {
-            break;
+            return -1;
         }
     }
 
