@@ -58,8 +58,24 @@ void test_binary_four_variants(void) {
     assert_approx(probabilities[3], 0.019199460674668434);
 }
 
+void test_binary_five_variants(void) {
+    int participants[5] = {55, 30, 10, 50, 20};
+    int conversions[5] = {50, 30, 10, 45, 15};
+    double probabilities[5];
+    int status = bayestest_binary(5, participants, conversions, probabilities);
+    assert(status == -1);
+}
+
 void test_binary_negative_participants(void) {
     int participants[1] = {-1};
+    int conversions[1] = {1};
+    double probabilities[1];
+    int status = bayestest_binary(1, participants, conversions, probabilities);
+    assert(status == -1);
+}
+
+void test_binary_high_participants(void) {
+    int participants[1] = {INT_MAX};
     int conversions[1] = {1};
     double probabilities[1];
     int status = bayestest_binary(1, participants, conversions, probabilities);
@@ -76,6 +92,14 @@ void test_binary_negative_conversions(void) {
 
 void test_binary_high_conversions(void) {
     int participants[1] = {1};
+    int conversions[1] = {INT_MAX};
+    double probabilities[1];
+    int status = bayestest_binary(1, participants, conversions, probabilities);
+    assert(status == -1);
+}
+
+void test_binary_more_conversions(void) {
+    int participants[1] = {1};
     int conversions[1] = {2};
     double probabilities[1];
     int status = bayestest_binary(1, participants, conversions, probabilities);
@@ -88,7 +112,10 @@ int main(void) {
     test_binary_two_variants();
     test_binary_three_variants();
     test_binary_four_variants();
+    test_binary_five_variants();
     test_binary_negative_participants();
+    test_binary_high_participants();
     test_binary_negative_conversions();
     test_binary_high_conversions();
+    test_binary_more_conversions();
 }
