@@ -30,7 +30,14 @@ static inline double bayestest_prob_b_beats_a(int alpha_a, int beta_a, int alpha
 }
 
 /// @private
-static inline double bayestest_prob_c_beats_ab(int alpha_a, int beta_a, int alpha_b, int beta_b, int alpha_c, int beta_c) {
+static inline double bayestest_prob_c_beats_ab(
+    int alpha_a,
+    int beta_a,
+    int alpha_b,
+    int beta_b,
+    int alpha_c,
+    int beta_c
+) {
     double* log_bb_j_logbeta_j_bb = malloc(sizeof(double) * (unsigned int) alpha_b);
     double* logbeta_ac_i_j = malloc(sizeof(double) * (unsigned int) (alpha_a + alpha_b));
 
@@ -70,7 +77,16 @@ static inline double bayestest_prob_c_beats_ab(int alpha_a, int beta_a, int alph
 }
 
 /// @private
-static inline double bayestest_prob_d_beats_abc(int alpha_a, int beta_a, int alpha_b, int beta_b, int alpha_c, int beta_c, int alpha_d, int beta_d) {
+static inline double bayestest_prob_d_beats_abc(
+    int alpha_a,
+    int beta_a,
+    int alpha_b,
+    int beta_b,
+    int alpha_c,
+    int beta_c,
+    int alpha_d,
+    int beta_d
+) {
     double* log_bb_j_logbeta_j_bb = malloc(sizeof(double) * (unsigned int) alpha_b);
     double* log_bc_k_logbeta_k_bc = malloc(sizeof(double) * (unsigned int) alpha_c);
     double* logbeta_bd_i_j_k = malloc(sizeof(double) * (unsigned int) (alpha_a + alpha_b + alpha_c));
@@ -125,7 +141,12 @@ static inline double bayestest_prob_d_beats_abc(int alpha_a, int beta_a, int alp
 }
 
 /// Returns the winning probability of each variant for binary outcomes.
-static inline int bayestest_binary(int variants, const int* participants, const int* conversions, double* probabilities) {
+static inline int bayestest_binary(
+    int variants,
+    const int* participants,
+    const int* conversions,
+    double* probabilities
+) {
     if (variants < 0 || variants > 4) {
         return -1;
     }
@@ -257,7 +278,14 @@ static inline double bayestest_prob_1_beats_2(int alpha_1, int beta_1, int alpha
 }
 
 /// @private
-static inline double bayestest_prob_1_beats_23(int alpha_1, int beta_1, int alpha_2, int beta_2, int alpha_3, int beta_3) {
+static inline double bayestest_prob_1_beats_23(
+    int alpha_1,
+    int beta_1,
+    int alpha_2,
+    int beta_2,
+    int alpha_3,
+    int beta_3
+) {
     double total = 0.0;
     double log_b1_b2_b3 = log(beta_1 + beta_2 + beta_3);
     double a1_log_b1 = alpha_1 * log(beta_1);
@@ -282,7 +310,12 @@ static inline double bayestest_prob_1_beats_23(int alpha_1, int beta_1, int alph
 }
 
 /// Returns the winning probability of each variant for count data.
-static inline int bayestest_count(int variants, const int* events, const int* exposure, double* probabilities) {
+static inline int bayestest_count(
+    int variants,
+    const int* events,
+    const int* exposure,
+    double* probabilities
+) {
     if (variants < 0 || variants > 3) {
         return -1;
     }
