@@ -23,7 +23,10 @@ static inline double bayestest_prob_b_beats_a(int alpha_a, int beta_a, int alpha
     double beta_ba = beta_b + beta_a;
 
     for (int i = 0; i < alpha_b; i++) {
-        total += exp(bayestest_logbeta(alpha_a + i, beta_ba) - log(beta_b + i) - bayestest_logbeta(1 + i, beta_b) - logbeta_aa_ba);
+        total += exp(
+            bayestest_logbeta(alpha_a + i, beta_ba) - log(beta_b + i)
+            - bayestest_logbeta(1 + i, beta_b) - logbeta_aa_ba
+        );
     }
 
     return total;
@@ -70,10 +73,8 @@ static inline double bayestest_prob_c_beats_ab(
     free(log_bb_j_logbeta_j_bb);
     free(logbeta_ac_i_j);
 
-    return 1
-        - bayestest_prob_b_beats_a(alpha_c, beta_c, alpha_a, beta_a)
-        - bayestest_prob_b_beats_a(alpha_c, beta_c, alpha_b, beta_b)
-        + total;
+    return 1 - bayestest_prob_b_beats_a(alpha_c, beta_c, alpha_a, beta_a)
+        - bayestest_prob_b_beats_a(alpha_c, beta_c, alpha_b, beta_b) + total;
 }
 
 /// @private
@@ -89,9 +90,12 @@ static inline double bayestest_prob_d_beats_abc(
 ) {
     double* log_bb_j_logbeta_j_bb = malloc(sizeof(double) * (unsigned int) alpha_b);
     double* log_bc_k_logbeta_k_bc = malloc(sizeof(double) * (unsigned int) alpha_c);
-    double* logbeta_bd_i_j_k = malloc(sizeof(double) * (unsigned int) (alpha_a + alpha_b + alpha_c));
+    double* logbeta_bd_i_j_k = malloc(
+        sizeof(double) * (unsigned int) (alpha_a + alpha_b + alpha_c)
+    );
 
-    if (log_bb_j_logbeta_j_bb == NULL || log_bc_k_logbeta_k_bc == NULL || logbeta_bd_i_j_k == NULL) {
+    if (log_bb_j_logbeta_j_bb == NULL || log_bc_k_logbeta_k_bc == NULL
+        || logbeta_bd_i_j_k == NULL) {
         free(log_bb_j_logbeta_j_bb);
         free(log_bc_k_logbeta_k_bc);
         free(logbeta_bd_i_j_k);
@@ -130,14 +134,12 @@ static inline double bayestest_prob_d_beats_abc(
     free(log_bc_k_logbeta_k_bc);
     free(logbeta_bd_i_j_k);
 
-    return 1
-        - bayestest_prob_b_beats_a(alpha_a, beta_a, alpha_d, beta_d)
+    return 1 - bayestest_prob_b_beats_a(alpha_a, beta_a, alpha_d, beta_d)
         - bayestest_prob_b_beats_a(alpha_b, beta_b, alpha_d, beta_d)
         - bayestest_prob_b_beats_a(alpha_c, beta_c, alpha_d, beta_d)
         + bayestest_prob_c_beats_ab(alpha_a, beta_a, alpha_b, beta_b, alpha_d, beta_d)
         + bayestest_prob_c_beats_ab(alpha_a, beta_a, alpha_c, beta_c, alpha_d, beta_d)
-        + bayestest_prob_c_beats_ab(alpha_b, beta_b, alpha_c, beta_c, alpha_d, beta_d)
-        - total;
+        + bayestest_prob_c_beats_ab(alpha_b, beta_b, alpha_c, beta_c, alpha_d, beta_d) - total;
 }
 
 /// Returns the winning probability of each variant for binary outcomes.
@@ -267,11 +269,10 @@ static inline double bayestest_prob_1_beats_2(int alpha_1, int beta_1, int alpha
     double log_b1_b2 = log(beta_1 + beta_2);
 
     for (int k = 0; k < alpha_1; k++) {
-        total += exp(k * log_b1 +
-            a2_log_b2 -
-            (k + alpha_2) * log_b1_b2 -
-            log(k + alpha_2) -
-            bayestest_logbeta(k + 1, alpha_2));
+        total += exp(
+            k * log_b1 + a2_log_b2 - (k + alpha_2) * log_b1_b2 - log(k + alpha_2)
+            - bayestest_logbeta(k + 1, alpha_2)
+        );
     }
 
     return total;
@@ -297,16 +298,15 @@ static inline double bayestest_prob_1_beats_23(
         double sum_k = a1_log_b1 + k * log_b2 - lgamma(k + 1);
 
         for (int l = 0; l < alpha_3; l++) {
-            total += exp(sum_k + l * log_b3
-                - (k + l + alpha_1) * log_b1_b2_b3
-                + lgamma(k + l + alpha_1) - lgamma(l + 1) - loggamma_a1);
+            total += exp(
+                sum_k + l * log_b3 - (k + l + alpha_1) * log_b1_b2_b3 + lgamma(k + l + alpha_1)
+                - lgamma(l + 1) - loggamma_a1
+            );
         }
     }
 
-    return 1
-        - bayestest_prob_1_beats_2(alpha_2, beta_2, alpha_1, beta_1)
-        - bayestest_prob_1_beats_2(alpha_3, beta_3, alpha_1, beta_1)
-        + total;
+    return 1 - bayestest_prob_1_beats_2(alpha_2, beta_2, alpha_1, beta_1)
+        - bayestest_prob_1_beats_2(alpha_3, beta_3, alpha_1, beta_1) + total;
 }
 
 /// Returns the winning probability of each variant for count data.
@@ -349,12 +349,7 @@ static inline int bayestest_count(
         case 2: {
             int a = 0;
             int b = 1;
-            double prob = bayestest_prob_1_beats_2(
-                events[a],
-                exposure[a],
-                events[b],
-                exposure[b]
-            );
+            double prob = bayestest_prob_1_beats_2(events[a], exposure[a], events[b], exposure[b]);
 
             probabilities[0] = prob;
             probabilities[1] = 1 - prob;
@@ -368,12 +363,7 @@ static inline int bayestest_count(
                 int c = (i + 2) % 3;
 
                 double prob = bayestest_prob_1_beats_23(
-                    events[a],
-                    exposure[a],
-                    events[b],
-                    exposure[b],
-                    events[c],
-                    exposure[c]
+                    events[a], exposure[a], events[b], exposure[b], events[c], exposure[c]
                 );
 
                 probabilities[i] = prob;
