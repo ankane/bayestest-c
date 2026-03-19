@@ -1,4 +1,4 @@
-## 0.1.1 (unreleased)
+## 0.1.1 (2026-03-18)
 
 - Added support for count data
 

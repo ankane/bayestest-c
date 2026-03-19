@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.18)
 
-project(bayestest VERSION 0.1.0 LANGUAGES C)
+project(bayestest VERSION 0.1.1 LANGUAGES C)
 
 if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
     add_library(bayestest INTERFACE)

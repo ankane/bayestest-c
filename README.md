@@ -10,7 +10,7 @@ Also available in [C++](https://github.com/ankane/bayestest-cpp) and [Rust](http
 
 ## Installation
 
-Add [the header](https://raw.githubusercontent.com/ankane/bayestest-c/v0.1.0/include/bayestest.h) to your project.
+Add [the header](https://raw.githubusercontent.com/ankane/bayestest-c/v0.1.1/include/bayestest.h) to your project.
 
 ## Getting Started
 
@@ -37,8 +37,6 @@ Status is `0` on success
 Supports up to 4 variants
 
 ## Count Data
-
-[unreleased]
 
 ```c
 int events[2] = {100, 200};
